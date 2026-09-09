@@ -9,6 +9,7 @@ import RecordsStats from "./components/RecordsStats";
 import PeakScatter from "./components/PeakScatter";
 import BenfordChart from "./components/BenfordChart";
 import OpenQuestions from "./components/OpenQuestions";
+import LyapunovIdea from "./components/LyapunovIdea";
 import ProofProgress from "./components/ProofProgress";
 import NamesGrid from "./components/NamesGrid";
 import StepsFormula from "./components/StepsFormula";
@@ -72,6 +73,7 @@ export default function App() {
           lede="Every integer checked up to 2^71 reaches 1. A counterexample beyond that limit has not been ruled out."
         >
           <OpenQuestions />
+          <LyapunovIdea />
           <ProofProgress />
           <NamesGrid />
         </Section>
