@@ -1,8 +1,8 @@
 const STATS = [
   { value: "2^71", sub: "≈ 2.36 × 10^21", label: "Every integer up to here has been checked by distributed computing. All of them reach 1." },
-  { value: "186B+", sub: "186,000,000,000", label: "Minimum length any undiscovered loop other than 4·2·1 would have to be, given the search so far." },
+  { value: "355.5B+", sub: "unshortened steps", label: "Minimum length of any undiscovered loop other than 4·2·1 under the rule used on this page." },
   { value: "111", sub: "steps", label: "How long it takes the seed 27 to fall back to 1 — after climbing to 9,232 first." },
-  { value: "3/4", sub: "geometric mean", label: "The average shrink factor from one odd number to the next — the statistical reason sequences trend down, not up." },
+  { value: "3/4", sub: "heuristic mean", label: "The geometric-mean multiplier predicted by a random-parity model, not an average proved for every orbit." },
 ];
 
 /** The hard numbers behind "we're pretty sure, but not certain." */

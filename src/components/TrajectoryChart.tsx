@@ -24,16 +24,17 @@ export default function TrajectoryChart(props: Props) {
     const seq = props.sequence;
     const w = width - PAD_L - PAD_R;
     const h = height() - PAD_T - PAD_B;
-    const values = props.logScale ? seq.map((v) => Math.log10(Math.max(v, 1))) : seq;
-    const maxV = Math.max(...values, props.logScale ? 0.1 : 1);
-    const minV = props.logScale ? 0 : 0;
+    const values = props.logScale ? seq.map(signedLog) : seq;
+    const maxV = Math.max(...values, 0);
+    const minV = Math.min(...values, 0);
+    const range = Math.max(maxV - minV, props.logScale ? 0.1 : 1);
     const stepX = seq.length > 1 ? w / (seq.length - 1) : w;
     const points = values.map((v, i) => {
       const x = PAD_L + i * stepX;
-      const y = PAD_T + h - ((v - minV) / (maxV - minV || 1)) * h;
+      const y = PAD_T + h - ((v - minV) / range) * h;
       return { x, y, v: seq[i], i };
     });
-    return { points, maxV, w, h };
+    return { points, maxV, minV, range, w, h };
   });
 
   const pathD = createMemo(() =>
@@ -50,11 +51,12 @@ export default function TrajectoryChart(props: Props) {
   });
 
   const yTicks = createMemo(() => {
-    const { maxV } = scaled();
+    const { minV, range } = scaled();
     const n = 4;
     return Array.from({ length: n + 1 }, (_, i) => {
       const frac = i / n;
-      const val = props.logScale ? Math.pow(10, frac * maxV) : frac * maxV;
+      const scaledValue = minV + frac * range;
+      const val = props.logScale ? signedPow10(scaledValue) : scaledValue;
       return { y: PAD_T + scaled().h - frac * scaled().h, label: formatTick(val) };
     });
   });
@@ -94,6 +96,8 @@ export default function TrajectoryChart(props: Props) {
       <svg
         viewBox={`0 0 ${width} ${height()}`}
         class="h-auto w-full overflow-visible"
+        role="img"
+        aria-label={`Collatz trajectory for ${props.sequence[0]}, with ${Math.max(0, props.sequence.length - 1)} steps and a highest value of ${Math.max(...props.sequence)}`}
         onMouseMove={(e) => onMove(e, e.currentTarget)}
         onMouseLeave={() => setHover(null)}
       >
@@ -161,6 +165,14 @@ export default function TrajectoryChart(props: Props) {
       </Show>
     </div>
   );
+}
+
+function signedLog(value: number): number {
+  return Math.sign(value) * Math.log10(1 + Math.abs(value));
+}
+
+function signedPow10(value: number): number {
+  return Math.sign(value) * (Math.pow(10, Math.abs(value)) - 1);
 }
 
 function formatTick(v: number): string {

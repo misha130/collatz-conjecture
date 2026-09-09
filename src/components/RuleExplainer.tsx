@@ -26,28 +26,32 @@ export default function RuleExplainer() {
   const reset = () => setStep(0);
 
   return (
-    <div class="mt-10 grid gap-8 lg:grid-cols-[1fr_1fr]">
-      <div class="corner-ticks border border-hairline bg-surface-container-low/50 p-6">
+    <div class="mt-10 grid min-w-0 gap-8 lg:grid-cols-[1fr_1fr]">
+      <div class="corner-ticks min-w-0 border border-hairline bg-surface-container-low/50 p-6">
         <p class="label mb-6 text-outline">The rule, applied to n = {seed}</p>
 
-        <div class="flex items-center justify-center gap-4">
+        <div class="flex items-center justify-center gap-3 sm:gap-6">
           <div
-            class={`font-display tnum flex h-20 w-20 items-center justify-center border-2 text-[26px] font-bold sm:h-24 sm:w-24 sm:text-[30px] ${
+            class={`font-display tnum flex h-24 w-24 items-center justify-center border-[3px] text-[34px] font-bold sm:h-36 sm:w-36 sm:text-[52px] lg:h-40 lg:w-40 lg:text-[58px] ${
               inLoop() ? "border-primary text-primary" : "border-on-surface text-on-surface"
             }`}
           >
             {current()}
           </div>
-          <div class="flex flex-col items-center gap-1">
-            <span class="label text-outline">{isOdd() ? "odd" : "even"}</span>
-            <svg width="34" height="14" viewBox="0 0 34 14" class="text-outline">
-              <path d="M0,7 H28" stroke="currentColor" stroke-width="1.5" />
-              <path d="M22,2 L28,7 L22,12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <div class="flex flex-col items-center gap-1.5 sm:gap-2">
+            <span class="text-[13px] font-bold uppercase tracking-[0.1em] text-outline sm:text-[16px]">
+              {isOdd() ? "odd" : "even"}
+            </span>
+            <svg width="44" height="18" viewBox="0 0 44 18" class="text-outline sm:h-6 sm:w-14" aria-hidden="true">
+              <path d="M0,9 H36" stroke="currentColor" stroke-width="2" />
+              <path d="M28,3 L36,9 L28,15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
-            <span class="font-mono text-[11px] text-on-surface-variant">{isOdd() ? "3n + 1" : "n ÷ 2"}</span>
+            <span class="font-mono text-[13px] font-bold text-on-surface-variant sm:text-[17px]">
+              {isOdd() ? "3n + 1" : "n ÷ 2"}
+            </span>
           </div>
           <div
-            class={`font-display tnum flex h-20 w-20 items-center justify-center border-2 text-[26px] font-bold sm:h-24 sm:w-24 sm:text-[30px] ${
+            class={`font-display tnum flex h-24 w-24 items-center justify-center border-[3px] text-[34px] font-bold sm:h-36 sm:w-36 sm:text-[52px] lg:h-40 lg:w-40 lg:text-[58px] ${
               step() === maxStep() ? "border-primary text-primary" : "border-hairline-strong text-on-surface-variant"
             }`}
           >
@@ -56,22 +60,22 @@ export default function RuleExplainer() {
         </div>
 
         <Show when={inLoop()}>
-          <p class="mt-4 text-center text-[12.5px] leading-relaxed text-primary">
+          <p class="mt-5 text-center text-[15px] leading-relaxed text-primary sm:text-[16px]">
             1 is odd too: 3(1) + 1 = 4, then 4 → 2 → 1. The rule never stops on its own.
           </p>
         </Show>
 
-        <div class="mt-6 flex items-center justify-center gap-3">
+        <div class="mt-7 flex items-center justify-center gap-3 sm:gap-4">
           <button
             onClick={reset}
-            class="label border border-hairline px-3 py-2 text-outline transition-colors hover:border-on-surface hover:text-on-surface"
+            class="font-display border border-hairline px-4 py-3 text-[13px] font-bold uppercase tracking-[0.06em] text-outline transition-colors hover:border-on-surface hover:text-on-surface sm:px-5 sm:py-3.5 sm:text-[15px]"
           >
             Reset
           </button>
           <button
             onClick={advance}
             disabled={step() === maxStep()}
-            class="label border border-on-surface bg-on-surface px-4 py-2 text-background transition-colors hover:bg-transparent hover:text-on-surface disabled:cursor-not-allowed disabled:opacity-40"
+            class="font-display border border-on-surface bg-on-surface px-6 py-3 text-[13px] font-bold uppercase tracking-[0.06em] text-background transition-colors hover:bg-transparent hover:text-on-surface disabled:cursor-not-allowed disabled:opacity-40 sm:px-8 sm:py-3.5 sm:text-[15px]"
           >
             {step() === maxStep() ? "Loops forever" : "Next step →"}
           </button>
@@ -82,13 +86,13 @@ export default function RuleExplainer() {
         </p>
       </div>
 
-      <div class="border border-hairline bg-surface-container-lowest">
+      <div class="min-w-0 border border-hairline bg-surface-container-lowest">
         <p class="label border-b border-hairline px-4 py-2.5 text-outline">Full trail so far</p>
-        <div class="flex flex-wrap gap-1.5 p-4">
+        <div class="mx-auto flex max-w-md flex-wrap justify-center gap-1 p-4">
           <For each={extended().slice(0, step() + 1)}>
             {(v, i) => (
               <span
-                class={`font-mono tnum border px-2 py-1 text-[12px] ${
+                class={`font-mono tnum border px-1.5 py-0.5 text-[10.5px] ${
                   i() === step()
                     ? "border-primary bg-primary/10 text-primary"
                     : i() > naturalEnd()

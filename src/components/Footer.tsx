@@ -50,6 +50,36 @@ export default function Footer() {
                   OEIS A006370 — the map itself
                 </a>
               </li>
+              <li>
+                <a
+                  href="https://pcbarina.fit.vutbr.cz/"
+                  target="_blank"
+                  rel="noreferrer"
+                  class="transition-colors hover:text-on-ink"
+                >
+                  Barina — verification limit
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://arxiv.org/abs/1909.03562"
+                  target="_blank"
+                  rel="noreferrer"
+                  class="transition-colors hover:text-on-ink"
+                >
+                  Tao — almost bounded orbits
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://doi.org/10.1112/S0025579300001480"
+                  target="_blank"
+                  rel="noreferrer"
+                  class="transition-colors hover:text-on-ink"
+                >
+                  Haselgrove — Pólya disproof
+                </a>
+              </li>
             </ul>
           </div>
         </div>

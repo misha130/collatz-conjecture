@@ -7,7 +7,7 @@ const CARDS = [
   {
     tag: "Failure mode 02",
     title: "A hidden loop",
-    body: "Besides 4 → 2 → 1, could some other set of numbers cycle among themselves forever, disconnected from the main structure? Computation rules out anything shorter than roughly 186 billion numbers — but not longer.",
+    body: "Besides 4 → 2 → 1, could some other set of numbers cycle among themselves forever, disconnected from the main structure? Current bounds rule out any such loop shorter than 355,504,839,929 steps under the unshortened rule used here — but not a longer one.",
   },
 ];
 
@@ -46,19 +46,19 @@ export default function OpenQuestions() {
 
         <div class="grid gap-0 sm:grid-cols-[auto_1fr]">
           <div class="border-b border-r-0 border-hairline p-6 sm:border-b-0 sm:border-r">
-            <p class="label text-outline">Smallest known counterexample</p>
+            <p class="label text-outline">Smallest counterexample</p>
             <p class="font-display tnum mt-2 text-[26px] font-bold leading-none text-error">
-              1.845 × 10<sup class="text-[15px]">361</sup>
+              906,150,257
             </p>
             <p class="mt-2 text-[11.5px] text-outline">
-              found by C. Brian Haselgrove, 1958 · a 362-digit number
+              found by Minoru Tanaka, 1980
             </p>
           </div>
           <div class="p-6 text-[13.5px] leading-[1.7] text-on-surface-variant">
-            Haselgrove didn't need to check anywhere near that far to disprove the conjecture — he
-            showed a violation had to exist near that scale using other means. The number is so large
-            it dwarfs the roughly 10<sup>80</sup> atoms estimated to exist in the observable universe.
-            Every case anyone had actually tested by 1958 was true. The conjecture wasn't.
+            C. Brian Haselgrove disproved the conjecture in 1958 by proving that a violation existed,
+            estimating one near 1.845 × 10<sup>361</sup>. An explicit counterexample near 906 million
+            was found in 1960; Tanaka later identified the smallest one shown here. A conjecture can
+            survive an enormous body of computation and still fail.
           </div>
         </div>
       </div>

@@ -28,6 +28,8 @@ export default function CoralMap() {
   let dragging = false;
   let lastX = 0;
   let lastY = 0;
+  let pointerDownX = 0;
+  let pointerDownY = 0;
   let dpr = 1;
 
   const rebuild = () => {
@@ -148,8 +150,6 @@ export default function CoralMap() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = wrap.clientWidth * dpr;
     canvas.height = wrap.clientHeight * dpr;
-    canvas.style.width = `${wrap.clientWidth}px`;
-    canvas.style.height = `${wrap.clientHeight}px`;
     const g = graph();
     if (g) fitView(g);
     draw();
@@ -186,6 +186,8 @@ export default function CoralMap() {
       dragging = true;
       lastX = e.clientX;
       lastY = e.clientY;
+      pointerDownX = e.clientX;
+      pointerDownY = e.clientY;
       canvas.setPointerCapture(e.pointerId);
     };
     const onMoveP = (e: PointerEvent) => {
@@ -203,7 +205,7 @@ export default function CoralMap() {
     };
     const onUp = (e: PointerEvent) => {
       if (dragging) {
-        const moved = Math.abs(e.clientX - lastX) + Math.abs(e.clientY - lastY);
+        const moved = Math.abs(e.clientX - pointerDownX) + Math.abs(e.clientY - pointerDownY);
         if (moved < 3) {
           const n = findNearest(e.clientX, e.clientY);
           setSelected(n);
@@ -224,14 +226,31 @@ export default function CoralMap() {
       scale = newScale;
       draw();
     };
+    const onKeyDown = (e: KeyboardEvent) => {
+      const panAmount = 28;
+      if (e.key === "ArrowLeft") offsetX += panAmount;
+      else if (e.key === "ArrowRight") offsetX -= panAmount;
+      else if (e.key === "ArrowUp") offsetY += panAmount;
+      else if (e.key === "ArrowDown") offsetY -= panAmount;
+      else if (e.key === "+" || e.key === "=") scale = Math.min(60, scale * 1.15);
+      else if (e.key === "-") scale = Math.max(0.05, scale / 1.15);
+      else if (e.key === "Home") {
+        const currentGraph = graph();
+        if (currentGraph) fitView(currentGraph);
+      } else return;
+      e.preventDefault();
+      draw();
+    };
 
     canvas.addEventListener("pointerdown", onDown);
     canvas.addEventListener("pointermove", onMoveP);
+    canvas.addEventListener("keydown", onKeyDown);
     window.addEventListener("pointerup", onUp);
     canvas.addEventListener("wheel", onWheel, { passive: false });
     onCleanup(() => {
       canvas.removeEventListener("pointerdown", onDown);
       canvas.removeEventListener("pointermove", onMoveP);
+      canvas.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("pointerup", onUp);
       canvas.removeEventListener("wheel", onWheel);
     });
@@ -254,11 +273,18 @@ export default function CoralMap() {
   };
 
   return (
-    <div class="mt-10 grid gap-6 lg:grid-cols-[1fr_260px]">
-      <div class="corner-ticks relative border border-hairline bg-surface-container-lowest">
+    <div class="mt-10 grid min-w-0 gap-6 lg:grid-cols-[1fr_260px]">
+      <div class="corner-ticks relative min-w-0 border border-hairline bg-surface-container-lowest">
         <div class="grid-paper absolute inset-0 opacity-40" aria-hidden="true" />
         <div ref={wrapRef} class="relative h-[420px] w-full sm:h-[520px]">
-          <canvas ref={canvasRef} class="absolute inset-0 block h-full w-full touch-none" />
+          <canvas
+            ref={canvasRef}
+            class="absolute inset-0 block h-full w-full touch-none"
+            role="img"
+            tabindex="0"
+            aria-label="Interactive reverse Collatz graph rooted at 1"
+            aria-describedby="coral-instructions"
+          />
         </div>
 
         <div class="pointer-events-none absolute left-3 top-3 border border-hairline-strong bg-surface-container-lowest/90 px-2.5 py-1.5 backdrop-blur-sm">
@@ -304,17 +330,17 @@ export default function CoralMap() {
               </button>
             </>
           ) : (
-            <p class="text-[12.5px] leading-relaxed text-on-surface-variant">
+            <p id="coral-instructions" class="text-[12.5px] leading-relaxed text-on-surface-variant">
               Click any point on the coral to see its value and trace its path back to the root. Drag to pan,
-              scroll to zoom.
+              scroll to zoom. With the graph focused, use arrow keys to pan, + or − to zoom, and Home to reset.
             </p>
           )}
         </div>
 
         <p class="text-[12px] leading-relaxed text-on-surface-variant">
-          Every branch point is a number with two ways to arrive from a smaller one: double it, or — only
-          when the arithmetic allows — the reverse of a triple-plus-one step. If the conjecture is true,
-          this structure eventually reaches every positive integer.
+          Every node has the predecessor 2n; nodes congruent to 4 modulo 6 also have the positive odd
+          predecessor (n−1)/3. If the conjecture is true, this structure eventually reaches every positive
+          integer.
         </p>
       </div>
     </div>
@@ -352,7 +378,7 @@ function Slider(props: {
   format: (v: number) => string;
 }) {
   return (
-    <div class="mb-4">
+    <label class="mb-4 block">
       <div class="mb-1.5 flex items-center justify-between">
         <span class="text-[12px] text-on-surface-variant">{props.label}</span>
         <span class="font-mono tnum text-[12px] text-on-surface">{props.format(props.value)}</span>
@@ -363,9 +389,10 @@ function Slider(props: {
         max={props.max}
         step={props.step}
         value={props.value}
+        aria-valuetext={props.format(props.value)}
         onInput={(e) => props.onInput(Number(e.currentTarget.value))}
         class="w-full"
       />
-    </div>
+    </label>
   );
 }

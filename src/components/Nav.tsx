@@ -52,6 +52,7 @@ export default function Nav() {
         <button
           class="label ml-auto flex items-center gap-2 px-2 py-2 text-on-surface lg:hidden"
           aria-expanded={open()}
+          aria-controls="mobile-navigation"
           aria-label="Toggle navigation"
           onClick={() => setOpen(!open())}
         >
@@ -68,7 +69,7 @@ export default function Nav() {
       </nav>
 
       {open() && (
-        <div class="border-t border-hairline bg-surface-container-lowest lg:hidden">
+        <div id="mobile-navigation" class="border-t border-hairline bg-surface-container-lowest lg:hidden">
           <div class="mx-auto flex max-w-[1440px] flex-col px-5 py-2">
             {LINKS.map((l) => (
               <a

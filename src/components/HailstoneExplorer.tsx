@@ -7,7 +7,7 @@ const CURATED = [
   { n: 26, note: "10 steps, peaks at just 40" },
   { n: 9663, note: "climbs to roughly 27 million before it falls" },
   { n: 341, note: "hits 1,024, then simply halves ten times in a row" },
-  { n: 6171, note: "one of the largest early peaks under 10,000" },
+  { n: 6171, note: "record total stopping time under 10,000: 261 steps" },
 ];
 
 export default function HailstoneExplorer() {
@@ -28,9 +28,13 @@ export default function HailstoneExplorer() {
 
   createEffect(() => {
     const raw = input().trim();
-    const n = Math.round(Number(raw));
+    const n = Number(raw);
     if (raw === "" || !Number.isFinite(n)) {
       setError(null);
+      return;
+    }
+    if (!Number.isInteger(n)) {
+      setError("Enter a whole number.");
       return;
     }
     if (!allowNegative() && n < 1) {
@@ -72,6 +76,7 @@ export default function HailstoneExplorer() {
             <span class="label flex items-center border-r border-hairline px-3 text-outline">n =</span>
             <input
               type="number"
+              step="1"
               value={input()}
               onInput={(e) => setInput(e.currentTarget.value)}
               class="font-mono tnum w-full bg-transparent px-3 py-2.5 text-[15px] text-on-surface outline-none"
@@ -122,7 +127,8 @@ export default function HailstoneExplorer() {
             <Show when={allowNegative()}>
               <p class="text-[11.5px] leading-relaxed text-on-surface-variant">
                 Extend the rule to negative integers and the tidy single ending disappears — try −17
-                or −5. Positive integers only ever have one place to land: the 4 → 2 → 1 loop.
+                or −5. The conjecture says positive integers all land in the 4 → 2 → 1 loop; every
+                positive seed tested so far does.
               </p>
             </Show>
           </div>
@@ -136,7 +142,7 @@ export default function HailstoneExplorer() {
                 <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
                   <p class="label text-outline">
                     Fig. — Altitude per step, n = {r().seed.toLocaleString()}
-                    {logScale() ? " (log₁₀ scale)" : ""}
+                    {logScale() ? r().seed < 0 ? " (signed log scale)" : " (log₁₀ scale)" : ""}
                   </p>
                   <Show when={r().truncated}>
                     <span class="label border border-error/40 bg-error/10 px-2 py-1 text-error">
@@ -148,8 +154,8 @@ export default function HailstoneExplorer() {
                 <TrajectoryChart sequence={r().sequence} logScale={logScale()} />
 
                 <div class="mt-6 grid grid-cols-2 gap-px border border-hairline bg-hairline sm:grid-cols-4">
-                  <Stat label="Total stopping time" value={r().steps.toLocaleString()} />
-                  <Stat label="Peak altitude" value={r().peak.toLocaleString()} accent />
+                  <Stat label={r().seed < 0 ? "Steps until repeat" : "Total stopping time"} value={r().steps.toLocaleString()} />
+                  <Stat label={r().seed < 0 ? "Highest value" : "Peak altitude"} value={r().peak.toLocaleString()} accent />
                   <Stat label="Odd steps (×3+1)" value={r().oddSteps.toLocaleString()} />
                   <Stat label="Even steps (÷2)" value={r().evenSteps.toLocaleString()} />
                 </div>

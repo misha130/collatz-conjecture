@@ -17,7 +17,7 @@ const MILESTONES = [
   {
     year: "2019",
     who: "Terence Tao",
-    body: "Proved that almost all Collatz orbits attain almost bounded values: for any function that creeps to infinity — log(n), even log(log(log(n))) — almost every starting number eventually dips below it.",
+    body: "Proved, in the sense of logarithmic density, that almost all Collatz orbits attain almost bounded values: for any function that tends to infinity — even extremely slowly — almost every starting number eventually dips below it.",
   },
 ];
 

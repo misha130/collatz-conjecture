@@ -55,8 +55,23 @@ export default function PeakScatter() {
     if (pt) setHover(pt);
   };
 
+  // Where the tooltip sits, as a percentage of the chart box — tracks the
+  // actual hovered point rather than a fixed corner, clamped so it never
+  // runs off the edge of the chart.
+  const tooltipPos = createMemo(() => {
+    const h = hover();
+    const p = plot();
+    if (!h || !p) return null;
+    const { x, y } = p.toXY(h.seed, h.peak);
+    return {
+      leftPct: Math.min(90, Math.max(10, (x / W) * 100)),
+      topPct: Math.min(85, Math.max(8, (y / H) * 100)),
+      above: y / H > 0.22,
+    };
+  });
+
   return (
-    <div class="corner-ticks border border-hairline bg-surface-container-low/40 p-6">
+    <div class="corner-ticks min-w-0 border border-hairline bg-surface-container-low/40 p-6">
       <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
         <p class="label text-outline">Fig. — Peak altitude reached, seeds 1–{SEED_COUNT.toLocaleString()}</p>
         <p class="label text-outline/70">log scale, y-axis</p>
@@ -68,6 +83,8 @@ export default function PeakScatter() {
             <svg
               viewBox={`0 0 ${W} ${H}`}
               class="h-auto w-full overflow-visible"
+              role="img"
+              aria-label={`Peak altitude for each Collatz seed from 1 through ${SEED_COUNT.toLocaleString()}, plotted on a logarithmic vertical scale`}
               onMouseMove={(e) => onMove(e, e.currentTarget)}
               onMouseLeave={() => setHover(null)}
             >
@@ -114,7 +131,12 @@ export default function PeakScatter() {
 
             <Show when={hover()}>
               {(h) => (
-                <div class="pointer-events-none absolute right-2 top-0 border border-hairline-strong bg-surface-container-lowest px-3 py-2 text-[11.5px] shadow-[0_8px_20px_-12px_rgba(0,0,0,0.35)]">
+                <div
+                  class={`pointer-events-none absolute z-10 -translate-x-1/2 border border-hairline-strong bg-surface-container-lowest px-3 py-2 text-[11.5px] shadow-[0_8px_20px_-12px_rgba(0,0,0,0.35)] ${
+                    tooltipPos()!.above ? "-translate-y-[calc(100%+10px)]" : "translate-y-2.5"
+                  }`}
+                  style={{ left: `${tooltipPos()!.leftPct}%`, top: `${tooltipPos()!.topPct}%` }}
+                >
                   <p class="label text-outline">seed {h().seed.toLocaleString()}</p>
                   <p class="font-mono tnum text-on-surface">peak {h().peak.toLocaleString()}</p>
                   <p class="font-mono tnum text-on-surface-variant">{h().steps} steps</p>
@@ -128,8 +150,8 @@ export default function PeakScatter() {
       <p class="mt-5 border-t border-hairline pt-4 text-[13px] leading-[1.7] text-on-surface-variant">
         Most seeds under 10,000 stay modest. Two stand out: <span class="text-on-surface">27</span>, which
         climbs to 9,232 over 111 steps, and <span class="text-on-surface">9,663</span>, which overshoots that
-        by three orders of magnitude on its way back down to 1. Nothing about a seed's size predicts its
-        peak — that unpredictability is the whole reason this is hard to prove.
+        by three orders of magnitude on its way back down to 1. Nearby seeds can have radically different
+        peaks; the plot offers no simple size-to-peak relationship.
       </p>
     </div>
   );

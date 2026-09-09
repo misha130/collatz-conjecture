@@ -40,14 +40,14 @@ function isEven(n: number): boolean {
 }
 
 /**
- * The three known cycles once you extend the rule to negative integers:
- * the trivial one and two "negative hailstone" loops. Detecting a repeat
+ * The four known cycles once you extend the rule to negative integers:
+ * the trivial positive loop and three negative loops. Detecting a repeat
  * lets the sequence generator terminate on those instead of the positive
- * fixed point.
+ * cycle.
  */
 const KNOWN_CYCLES: number[][] = [
   [1, 4, 2],
-  [-1],
+  [-1, -2],
   [-5, -14, -7, -20, -10],
   [-17, -50, -25, -74, -37, -110, -55, -164, -82, -41, -122, -61, -182, -91, -272, -136, -68, -34],
 ];
@@ -64,13 +64,12 @@ export function cycleLabel(n: number): string {
   const cycle = cycleContaining(n);
   if (!cycle) return "no known cycle";
   if (cycle === KNOWN_CYCLES[0]) return "the 4 → 2 → 1 loop";
-  const lowest = Math.min(...cycle);
-  return `the ${cycle.length}-number loop through ${lowest}`;
+  return `the ${cycle.length}-number loop through ${cycle[0]}`;
 }
 
 /**
  * Runs the hailstone sequence from `seed` until it lands in a known cycle
- * (1 for every positive integer ever tested; one of two small loops if
+ * (1 for every positive integer ever tested; one of three negative loops if
  * negative seeds are allowed).
  */
 export function hailstone(seed: number, opts: { allowNegative?: boolean } = {}): HailstoneResult {

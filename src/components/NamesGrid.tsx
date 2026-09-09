@@ -23,7 +23,7 @@ const PEOPLE = [
   },
   {
     name: "Terence Tao",
-    body: "Proved in 2019 that almost all Collatz orbits attain almost bounded values — the closest anyone has come to a proof without producing one.",
+    body: "Proved in 2019 that almost all Collatz orbits attain almost bounded values, with ‘almost all’ measured by logarithmic density — a major partial result, but not a proof for every integer.",
   },
 ];
 

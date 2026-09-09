@@ -1,4 +1,4 @@
-import { createMemo, createSignal, For, onCleanup, onMount } from "solid-js";
+import { createMemo, createSignal, For, onCleanup, onMount, Show } from "solid-js";
 import { hailstone } from "../lib/collatz";
 import Accent from "./Accent";
 
@@ -28,7 +28,13 @@ function HeroTrace(props: { seed: number }) {
   });
 
   return (
-    <svg viewBox="0 0 520 220" class="h-full w-full overflow-visible" preserveAspectRatio="none">
+    <svg
+      viewBox="0 0 520 220"
+      class="h-full w-full overflow-visible"
+      preserveAspectRatio="none"
+      role="img"
+      aria-label={`Altitude across the ${result().steps}-step Collatz trajectory for ${props.seed}, peaking at ${result().peak.toLocaleString()}`}
+    >
       <defs>
         <linearGradient id="hero-fade" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stop-color="var(--primary)" stop-opacity="0.28" />
@@ -64,16 +70,20 @@ function HeroTrace(props: { seed: number }) {
 export default function Hero() {
   const [seed, setSeed] = createSignal(27);
   const [input, setInput] = createSignal("27");
+  const [error, setError] = createSignal<string | null>(null);
 
   const submit = (e: Event) => {
     e.preventDefault();
-    const n = Math.round(Number(input()));
-    if (Number.isFinite(n) && n >= 1 && n <= 1_000_000_000) {
-      setSeed(n);
-      // Keep the full explorer further down the page in sync, without
-      // yanking the reader away from the hero card that just answered them.
-      window.dispatchEvent(new CustomEvent("collatz:goto", { detail: n }));
+    const n = Number(input());
+    if (!Number.isInteger(n) || n < 1 || n > 1_000_000_000) {
+      setError("Enter a whole number from 1 to 1,000,000,000.");
+      return;
     }
+    setError(null);
+    setSeed(n);
+    // Keep the full explorer further down the page in sync, without
+    // yanking the reader away from the hero card that just answered them.
+    window.dispatchEvent(new CustomEvent("collatz:goto", { detail: n }));
   };
 
   const stats = createMemo(() => hailstone(seed()));
@@ -102,17 +112,22 @@ export default function Hero() {
               counterexample. First posed in the 1930s; still open.
             </p>
 
-            <form onSubmit={submit} class="mt-7 flex max-w-md flex-wrap items-center gap-3">
+            <form onSubmit={submit} novalidate class="mt-7 flex max-w-md flex-wrap items-center gap-3">
               <div class="flex flex-1 items-stretch border border-hairline-strong bg-surface-container-lowest">
                 <span class="label flex items-center border-r border-hairline px-3 text-outline">n =</span>
                 <input
                   type="number"
                   min="1"
                   max="1000000000"
+                  step="1"
                   value={input()}
-                  onInput={(e) => setInput(e.currentTarget.value)}
+                  onInput={(e) => {
+                    setInput(e.currentTarget.value);
+                    setError(null);
+                  }}
                   class="font-mono tnum w-full bg-transparent px-3 py-2.5 text-[15px] text-on-surface outline-none"
                   aria-label="Starting number"
+                  aria-invalid={error() !== null}
                 />
               </div>
               <button
@@ -122,6 +137,9 @@ export default function Hero() {
                 Compute f*(n)
               </button>
             </form>
+            <Show when={error()}>
+              <p class="mt-2 text-[12px] text-error" role="alert">{error()}</p>
+            </Show>
 
             <div class="mt-4 flex flex-wrap items-center gap-2">
               <span class="label text-outline/70">n =</span>
@@ -132,6 +150,7 @@ export default function Hero() {
                     onClick={() => {
                       setInput(String(n));
                       setSeed(n);
+                      setError(null);
                     }}
                   >
                     {n}

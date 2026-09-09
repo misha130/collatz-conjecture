@@ -70,7 +70,7 @@ export default function StepsFormula() {
     <div class="mt-10">
       <p class="label text-primary">Is there a shortcut?</p>
       <h3 class="font-display mt-2 text-[18px] font-bold uppercase tracking-[0.03em] text-on-surface">
-        No formula takes n straight to a step count
+        No known formula takes n straight to a step count
       </h3>
 
       <div class="mt-6 grid gap-8 lg:grid-cols-[1fr_1fr]">
@@ -93,12 +93,12 @@ export default function StepsFormula() {
             That's a genuine formula — solved backward. It answers <em class="text-on-surface">which n
             produces this step pattern</em>, not <em class="text-on-surface">how many steps does this n
             take</em>. Each aᵢ is determined by arithmetic on the previous odd number in the chain, so
-            there's no way to read it off n₀ without walking the sequence that far. That circular
-            dependency — not mere complexity — is the actual obstruction.
+            this formula does not let us read it off n₀ without walking the sequence that far. The
+            circular dependency explains why this exact backward formula is not a predictive shortcut.
           </p>
         </div>
 
-        <div class="corner-ticks border border-hairline bg-surface-container-low/40 p-6">
+        <div class="corner-ticks min-w-0 border border-hairline bg-surface-container-low/40 p-6">
           <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
             <p class="label text-outline">Fig. — steps vs. log₂(seed), n = 2–{SAMPLE.toLocaleString()}</p>
           </div>
@@ -108,6 +108,8 @@ export default function StepsFormula() {
                 <svg
                   viewBox={`0 0 ${W} ${H}`}
                   class="h-auto w-full overflow-visible"
+                  role="img"
+                  aria-label={`Total stopping time versus the base-2 logarithm of each seed from 2 through ${SAMPLE.toLocaleString()}`}
                   onMouseMove={(e) => onMove(e, e.currentTarget)}
                   onMouseLeave={() => setHover(null)}
                 >
