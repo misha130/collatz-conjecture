@@ -2,12 +2,12 @@ const CARDS = [
   {
     tag: "Failure mode 01",
     title: "A number that never comes down",
-    body: "Nobody has found a starting number whose sequence grows forever instead of falling to 1. Nobody has proven one can't exist, either — the search space beyond 2^71 is vastly larger than the space already checked.",
+    body: "No starting value is known to grow forever, but no proof excludes one. Direct computer verification currently reaches 2^71.",
   },
   {
     tag: "Failure mode 02",
     title: "A hidden loop",
-    body: "Besides 4 → 2 → 1, could some other set of numbers cycle among themselves forever, disconnected from the main structure? Current bounds rule out any such loop shorter than 355,504,839,929 steps under the unshortened rule used here — but not a longer one.",
+    body: "A counterexample could also enter a cycle that does not include 1. Under the rule used here, any such cycle must be longer than 355,504,839,929 steps.",
   },
 ];
 
@@ -32,15 +32,14 @@ export default function OpenQuestions() {
 
       <div class="mt-8 border border-hairline">
         <div class="border-b border-hairline p-6">
-          <p class="label text-primary">A cautionary tale</p>
+          <p class="label text-primary">A useful comparison</p>
           <h3 class="font-display mt-3 text-[14px] font-bold uppercase tracking-[0.05em] text-on-surface">
             Pólya's conjecture
           </h3>
           <p class="mt-3 max-w-3xl text-[13.5px] leading-[1.7] text-on-surface-variant">
-            For an integer n ≥ 2, let Ω(n) count its prime factors with multiplicity (so Ω(12) = 3,
-            since 12 = 2 × 2 × 3). In 1919, George Pólya conjectured that for every N ≥ 2, at least
-            half the integers from 2 to N have Ω(n) odd rather than even. It matched every case
-            checked by hand and, later, by computer — for decades.
+            Let Ω(n) count the prime factors of n with multiplicity, so Ω(12) = 3 and Ω(1) = 0.
+            Pólya studied the claim that, for every N ≥ 2, at least half the integers from 1 to N have
+            odd Ω(n). Every value checked at the time supported the claim.
           </p>
         </div>
 
@@ -55,17 +54,16 @@ export default function OpenQuestions() {
             </p>
           </div>
           <div class="p-6 text-[13.5px] leading-[1.7] text-on-surface-variant">
-            C. Brian Haselgrove disproved the conjecture in 1958 by proving that a violation existed,
-            estimating one near 1.845 × 10<sup>361</sup>. An explicit counterexample near 906 million
-            was found in 1960; Tanaka later identified the smallest one shown here. A conjecture can
-            survive an enormous body of computation and still fail.
+            C. Brian Haselgrove disproved the claim in 1958 by showing that a counterexample existed
+            near 1.845 × 10<sup>361</sup>. A much smaller explicit example was found in 1960. Tanaka
+            later identified the smallest one, shown here.
           </div>
         </div>
       </div>
 
       <p class="mt-5 max-w-3xl text-[13px] leading-[1.7] text-outline">
-        Collatz has been checked up to 2<sup>71</sup> — about 2.36 × 10<sup>21</sup>. Against the scale a
-        false conjecture can hide at, that is not nearly the wall of evidence it looks like.
+        The Collatz conjecture has been checked up to 2<sup>71</sup>, about 2.36 × 10<sup>21</sup>. That is
+        strong computational evidence, but it is not a proof.
       </p>
     </div>
   );

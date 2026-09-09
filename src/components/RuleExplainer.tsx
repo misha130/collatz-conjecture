@@ -106,9 +106,9 @@ export default function RuleExplainer() {
           </For>
         </div>
         <div class="border-t border-hairline px-4 py-3 text-[13px] leading-relaxed text-on-surface-variant">
-          n = 7 reaches 1 after 16 steps, peaking at 52. Apply the rule to 1 itself — it's odd, so
-          3(1) + 1 = 4 — and it cycles 4, 2, 1, 4, 2, 1 indefinitely. That fixed loop, not the number
-          1 alone, is what the conjecture actually claims every starting number reaches.
+          Starting at 7, the sequence reaches 1 in 16 steps and peaks at 52. Applying the rule again
+          gives 1 → 4 → 2 → 1. The conjecture says every positive starting number eventually enters
+          this cycle.
         </div>
       </div>
     </div>

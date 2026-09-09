@@ -76,10 +76,9 @@ export default function StepsFormula() {
       <div class="mt-6 grid gap-8 lg:grid-cols-[1fr_1fr]">
         <div class="border border-hairline p-6">
           <p class="text-[13.5px] leading-[1.7] text-on-surface-variant">
-            Track only the odd numbers in a sequence. Each maps to the next by n → (3n + 1) / 2
-            <sup>a</sup>, where a is however many times 2 divides evenly into 3n + 1. Fix that whole
-            sequence of exponents a₁, …, aₖ in advance, and the starting value that produces exactly
-            that pattern has a closed form:
+            Consider only the odd values in a sequence. Each maps to the next by n → (3n + 1) / 2
+            <sup>a</sup>, where a is the number of times 3n + 1 can be divided by 2. Given the exponents
+            a₁, …, aₖ and a final odd value, the starting value has this closed form:
           </p>
 
           <div class="font-mono mt-4 overflow-x-auto border border-hairline-strong bg-surface-container-low/60 px-4 py-3.5 text-[13px] leading-[1.8] text-on-surface">
@@ -90,11 +89,9 @@ export default function StepsFormula() {
           </div>
 
           <p class="mt-4 text-[13.5px] leading-[1.7] text-on-surface-variant">
-            That's a genuine formula — solved backward. It answers <em class="text-on-surface">which n
-            produces this step pattern</em>, not <em class="text-on-surface">how many steps does this n
-            take</em>. Each aᵢ is determined by arithmetic on the previous odd number in the chain, so
-            this formula does not let us read it off n₀ without walking the sequence that far. The
-            circular dependency explains why this exact backward formula is not a predictive shortcut.
+            This formula works backward from a known step pattern. It does not predict the pattern for
+            a given n₀, because each exponent aᵢ depends on the previous odd value. Finding those
+            exponents still requires following the sequence.
           </p>
         </div>
 
@@ -164,12 +161,12 @@ export default function StepsFormula() {
           <Show when={fit()}>
             {(f) => (
               <p class="mt-4 border-t border-hairline pt-4 text-[12.5px] leading-[1.7] text-on-surface-variant">
-                Fitted live from {f().count.toLocaleString()} seeds: steps ≈{" "}
-                <span class="font-mono tnum text-on-surface">{f().k.toFixed(2)}</span> · log₂(n) on
-                average — the dashed line. But the ratio itself ranges from{" "}
+                For these {f().count.toLocaleString()} seeds, the mean fit is steps ≈{" "}
+                <span class="font-mono tnum text-on-surface">{f().k.toFixed(2)}</span> · log₂(n), shown
+                by the dashed line. Individual ratios range from{" "}
                 <span class="font-mono tnum text-on-surface">{f().minR.toFixed(2)}</span> to{" "}
-                <span class="font-mono tnum text-on-surface">{f().maxR.toFixed(2)}</span> across this
-                sample. That spread is the difference between a trend and a formula.
+                <span class="font-mono tnum text-on-surface">{f().maxR.toFixed(2)}</span>, so the fit is
+                descriptive rather than predictive.
               </p>
             )}
           </Show>

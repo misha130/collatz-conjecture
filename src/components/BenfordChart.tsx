@@ -27,7 +27,7 @@ export default function BenfordChart() {
   return (
     <div class="corner-ticks min-w-0 border border-hairline bg-surface-container-low/40 p-6">
       <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
-        <p class="label text-outline">Leading digit, across every hailstone number seen</p>
+        <p class="label text-outline">Leading digits in {SEED_COUNT.toLocaleString()} trajectories</p>
         <div class="flex items-center gap-4 text-[11.5px]">
           <span class="flex items-center gap-1.5 text-on-surface-variant">
             <span class="h-2.5 w-2.5 bg-primary" /> observed
@@ -62,12 +62,10 @@ export default function BenfordChart() {
           </For>
         </div>
         <p class="mt-6 border-t border-hairline pt-4 text-[13px] leading-[1.7] text-on-surface-variant">
-          Across {data()!.seedsScanned.toLocaleString()} sequences and {data()!.total.toLocaleString()} hailstone
-          values counted with repetition, roughly {(bars()[0]?.observed * 100).toFixed(0)}% start with the digit
-          1 — close to the {(benfordFrequency(1) * 100).toFixed(1)}% Benford's law predicts. Benford-like patterns
-          often appear in data that span several orders of magnitude, although range alone does not guarantee
-          them. Low leading digits occupy wider multiplicative intervals: a value must grow 100% to move from a
-          leading 1 to a leading 2, but only 11% to move from an 8 to a 9.
+          This scan contains {data()!.total.toLocaleString()} values, counting a value again each time it appears
+          in another trajectory. About {(bars()[0]?.observed * 100).toFixed(0)}% begin with 1; Benford's law
+          predicts {(benfordFrequency(1) * 100).toFixed(1)}%. Similar distributions often appear in data that
+          span several orders of magnitude, although a wide range alone is not enough to produce one.
         </p>
       </Show>
     </div>

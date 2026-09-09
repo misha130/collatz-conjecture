@@ -276,6 +276,10 @@ export default function CoralMap() {
     <div class="mt-10 grid min-w-0 gap-6 lg:grid-cols-[1fr_260px]">
       <div class="corner-ticks relative min-w-0 border border-hairline bg-surface-container-lowest">
         <div class="grid-paper absolute inset-0 opacity-40" aria-hidden="true" />
+        <p id="coral-instructions" class="sr-only">
+          Drag to pan and scroll to zoom. Use the arrow keys to pan, plus or minus to zoom, and Home
+          to reset the view.
+        </p>
         <div ref={wrapRef} class="relative h-[420px] w-full sm:h-[520px]">
           <canvas
             ref={canvasRef}
@@ -305,7 +309,7 @@ export default function CoralMap() {
 
       <div class="space-y-5">
         <div class="border border-hairline p-4">
-          <p class="label mb-3 text-outline">Shape it yourself</p>
+          <p class="label mb-3 text-outline">Graph controls</p>
           <Slider label="Complexity" value={maxNodes()} min={200} max={6000} step={100} onInput={setMaxNodes} format={(v) => v.toLocaleString()} />
           <Slider label="÷2 branch angle" value={angleEven()} min={0} max={60} step={1} onInput={setAngleEven} format={(v) => `${v}°`} />
           <Slider label="(n−1)/3 branch angle" value={angleOdd()} min={0} max={60} step={1} onInput={setAngleOdd} format={(v) => `${v}°`} />
@@ -323,24 +327,23 @@ export default function CoralMap() {
             <>
               <p class="font-display tnum text-[20px] font-bold text-primary">{formatInt(selected()!.value)}</p>
               <p class="mt-1 text-[12.5px] text-on-surface-variant">
-                {selected()!.depth} step{selected()!.depth === 1 ? "" : "s"} from 1, walking the rule backwards.
+                {selected()!.depth} reverse step{selected()!.depth === 1 ? "" : "s"} from 1.
               </p>
               <button class="label mt-3 border border-on-surface bg-on-surface px-3 py-2 text-background transition-colors hover:bg-transparent hover:text-on-surface" onClick={jumpToExplorer}>
                 Open in explorer →
               </button>
             </>
           ) : (
-            <p id="coral-instructions" class="text-[12.5px] leading-relaxed text-on-surface-variant">
-              Click any point on the coral to see its value and trace its path back to the root. Drag to pan,
-              scroll to zoom. With the graph focused, use arrow keys to pan, + or − to zoom, and Home to reset.
+            <p class="text-[12.5px] leading-relaxed text-on-surface-variant">
+              Click a point to see its value and path to the root. Drag to pan and scroll to zoom. The
+              arrow keys, +, −, and Home provide the same view controls from the keyboard.
             </p>
           )}
         </div>
 
         <p class="text-[12px] leading-relaxed text-on-surface-variant">
-          Every node has the predecessor 2n; nodes congruent to 4 modulo 6 also have the positive odd
-          predecessor (n−1)/3. If the conjecture is true, this structure eventually reaches every positive
-          integer.
+          Every node n has predecessor 2n. When n ≡ 4 (mod 6), it also has the positive odd predecessor
+          (n−1)/3. The conjecture is equivalent to saying that this graph contains every positive integer.
         </p>
       </div>
     </div>

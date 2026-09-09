@@ -11,8 +11,7 @@ export default function Footer() {
               <span class="font-display text-[14px] font-bold uppercase tracking-[0.04em] text-on-ink">Collatz</span>
             </div>
             <p class="mt-4 max-w-sm text-[13px] leading-[1.7] text-on-ink-muted">
-              n → n/2 if even, 3n + 1 if odd. Every chart and simulation on this page runs client-side,
-              in your browser, from that one rule.
+              n → n/2 if even, 3n + 1 if odd. The charts are calculated in your browser from this rule.
             </p>
           </div>
 
@@ -85,7 +84,7 @@ export default function Footer() {
         </div>
 
         <div class="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-[12px] text-on-ink-muted sm:flex-row sm:items-center sm:justify-between">
-          <p>All computation runs client-side, in the page you're reading.</p>
+          <p>All calculations run locally in your browser.</p>
           <a href="https://ryware.dev" target="_blank" rel="noreferrer" class="transition-colors hover:text-on-ink">
             ryware.dev
           </a>

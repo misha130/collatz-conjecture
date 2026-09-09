@@ -3,9 +3,9 @@ import { cycleLabel, hailstone, SAFE_SEED_MAX } from "../lib/collatz";
 import TrajectoryChart from "./TrajectoryChart";
 
 const CURATED = [
-  { n: 27, note: "111 steps, peaks at 9,232 — higher than Everest, in meters" },
-  { n: 26, note: "10 steps, peaks at just 40" },
-  { n: 9663, note: "climbs to roughly 27 million before it falls" },
+  { n: 27, note: "111 steps; reaches 9,232" },
+  { n: 26, note: "10 steps; reaches 40" },
+  { n: 9663, note: "reaches about 27 million" },
   { n: 341, note: "hits 1,024, then simply halves ten times in a row" },
   { n: 6171, note: "record total stopping time under 10,000: 261 steps" },
 ];
@@ -38,15 +38,15 @@ export default function HailstoneExplorer() {
       return;
     }
     if (!allowNegative() && n < 1) {
-      setError("Enter a positive whole number, or switch on negative seeds below.");
+      setError("Enter a positive whole number or enable negative seeds.");
       return;
     }
     if (Math.abs(n) > SAFE_SEED_MAX) {
-      setError(`Keep it under ${SAFE_SEED_MAX.toLocaleString()} — the demo is instant either way.`);
+      setError(`Enter a value between −${SAFE_SEED_MAX.toLocaleString()} and ${SAFE_SEED_MAX.toLocaleString()}.`);
       return;
     }
     if (n === 0) {
-      setError("0 has nowhere to go — try a nonzero integer.");
+      setError("Enter a nonzero integer.");
       return;
     }
     setError(null);
@@ -126,9 +126,8 @@ export default function HailstoneExplorer() {
             </label>
             <Show when={allowNegative()}>
               <p class="text-[11.5px] leading-relaxed text-on-surface-variant">
-                Extend the rule to negative integers and the tidy single ending disappears — try −17
-                or −5. The conjecture says positive integers all land in the 4 → 2 → 1 loop; every
-                positive seed tested so far does.
+                Negative seeds can enter one of three known cycles. Try −5 or −17. For positive
+                seeds, the conjecture predicts the 4 → 2 → 1 cycle.
               </p>
             </Show>
           </div>
@@ -162,13 +161,13 @@ export default function HailstoneExplorer() {
 
                 <Show when={allowNegative() && r().seed < 0}>
                   <p class="mt-4 text-[13px] leading-relaxed text-on-surface-variant">
-                    This one settles into <span class="text-on-surface">{cycleLabel(r().sequence[r().sequence.length - 1])}</span>.
+                    This sequence enters <span class="text-on-surface">{cycleLabel(r().sequence[r().sequence.length - 1])}</span>.
                   </p>
                 </Show>
 
                 <div class="mt-6 border-t border-hairline pt-5">
                   <div class="mb-2 flex items-center justify-between">
-                    <p class="label text-outline">Every value in the trail</p>
+                    <p class="label text-outline">Sequence values</p>
                     <Show when={r().sequence.length > 60}>
                       <button class="label text-primary" onClick={() => setShowAll(!showAll())}>
                         {showAll() ? "Show fewer" : `Show all ${r().sequence.length}`}

@@ -148,10 +148,9 @@ export default function PeakScatter() {
       </Show>
 
       <p class="mt-5 border-t border-hairline pt-4 text-[13px] leading-[1.7] text-on-surface-variant">
-        Most seeds under 10,000 stay modest. Two stand out: <span class="text-on-surface">27</span>, which
-        climbs to 9,232 over 111 steps, and <span class="text-on-surface">9,663</span>, which overshoots that
-        by three orders of magnitude on its way back down to 1. Nearby seeds can have radically different
-        peaks; the plot offers no simple size-to-peak relationship.
+        The seed <span class="text-on-surface">27</span> reaches 9,232 over 111 steps.
+        <span class="text-on-surface"> 9,663</span> reaches 27,114,424 before returning to 1. The scattered
+        peaks show how differently nearby starting values can behave.
       </p>
     </div>
   );

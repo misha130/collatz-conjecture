@@ -107,9 +107,9 @@ export default function Hero() {
             </div>
 
             <p class="mt-5 max-w-xl text-[15px] leading-[1.75] text-on-surface-variant">
-              Every integer up to 2<sup>71</sup> (≈ 2.36 × 10<sup>21</sup>) has been checked by computer
-              and reaches 1. No proof covers the integers beyond that bound, and none rules out a
-              counterexample. First posed in the 1930s; still open.
+              Computers have checked every integer up to 2<sup>71</sup> (≈ 2.36 × 10<sup>21</sup>), and all
+              of them reach 1. No proof covers every positive integer. The problem was first posed in
+              the 1930s and remains open.
             </p>
 
             <form onSubmit={submit} novalidate class="mt-7 flex max-w-md flex-wrap items-center gap-3">
@@ -187,7 +187,7 @@ export default function Hero() {
               </div>
             </div>
             <p class="label mt-3 text-center text-outline/70">
-              The orbit of n under repeated f — a hailstone sequence.
+              Repeated applications of f form a hailstone sequence.
             </p>
           </div>
         </div>

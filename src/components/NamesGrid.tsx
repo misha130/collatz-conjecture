@@ -11,19 +11,19 @@ const ALIASES = [
 const PEOPLE = [
   {
     name: "Lothar Collatz",
-    body: "German mathematician generally credited with posing the problem in the 1930s — though, fittingly for a conjecture this slippery, its exact origin and its several independent names are disputed.",
+    body: "Generally credited with posing the problem in the 1930s. Its exact origin is uncertain, and several mathematicians later encountered it independently.",
   },
   {
     name: "Paul Erdős",
-    body: "Offered a cash prize for a proof and, more famously, the assessment mathematicians still quote today: mathematics may simply not be ready for questions like this one.",
+    body: "Offered a cash prize for a proof. He also remarked that mathematics might not yet be ready for problems of this kind.",
   },
   {
     name: "Jeffrey Lagarias",
-    body: "The field's leading authority, and keeper of an annotated bibliography of essentially every serious paper written on the problem since the 1970s.",
+    body: "A leading expert on the problem who maintains an extensive annotated bibliography of Collatz research.",
   },
   {
     name: "Terence Tao",
-    body: "Proved in 2019 that almost all Collatz orbits attain almost bounded values, with ‘almost all’ measured by logarithmic density — a major partial result, but not a proof for every integer.",
+    body: "Proved in 2019 that almost all Collatz orbits, measured by logarithmic density, reach almost bounded values.",
   },
 ];
 
@@ -42,8 +42,7 @@ export default function NamesGrid() {
           ))}
         </ul>
         <p class="mt-4 border-t border-hairline pt-4 text-[12.5px] leading-relaxed text-on-surface-variant">
-          A problem this easy to restate gets independently rediscovered — which is exactly what happened,
-          repeatedly, across different countries and decades.
+          The problem was rediscovered several times in different countries, which accounts for its many names.
         </p>
       </div>
 

@@ -2,26 +2,26 @@ const MILESTONES = [
   {
     year: "1976",
     who: "Riho Terras",
-    body: "Showed that almost every Collatz sequence eventually dips below its own starting value — \"almost every\" in the precise sense that the fraction of exceptions shrinks to zero as the numbers grow.",
+    body: "Showed that almost every Collatz sequence eventually falls below its starting value. The possible exceptions have natural density zero.",
   },
   {
     year: "1979",
     who: "—",
-    body: "The bound tightened: almost all sequences fall below n^0.869 at some point along the way.",
+    body: "Later work showed that almost all sequences eventually fall below n^0.869.",
   },
   {
     year: "1994",
-    who: "—",
-    body: "Tightened again, to n^0.7925 — a smaller and smaller ceiling, but still a ceiling, not a proof that every sequence obeys it.",
+    who: "Ivan Korec",
+    body: "Improved the exponent again: almost all sequences eventually fall below n^0.7925.",
   },
   {
     year: "2019",
     who: "Terence Tao",
-    body: "Proved, in the sense of logarithmic density, that almost all Collatz orbits attain almost bounded values: for any function that tends to infinity — even extremely slowly — almost every starting number eventually dips below it.",
+    body: "Proved that almost all orbits reach almost bounded values, using logarithmic density. The bound may grow toward infinity as slowly as desired.",
   },
 ];
 
-const TAO_QUOTE = "This is about as close as one can get to the Collatz conjecture without actually solving it.";
+const TAO_QUOTE = "You can get as close as you want to the Collatz conjecture, but it’s still out of reach.";
 
 /**
  * The sequence of "almost all" results tightening the noose around the
@@ -45,7 +45,7 @@ export default function ProofProgress() {
 
       <div class="mt-8 border-l-2 border-primary bg-surface-container-low/50 px-6 py-5">
         <p class="font-serif text-[19px] leading-snug text-on-surface">“{TAO_QUOTE}”</p>
-        <p class="label mt-3 text-outline">— Terence Tao, public lecture, 2020</p>
+        <p class="label mt-3 text-outline">— Terence Tao, Quanta interview, 2019</p>
       </div>
     </div>
   );

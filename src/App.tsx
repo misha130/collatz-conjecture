@@ -25,8 +25,8 @@ export default function App() {
         <SectionMarker label="The rule" note="Two operations" />
         <Section
           id="rule"
-          title={<>Two operations define <Accent>the whole rule.</Accent></>}
-          lede="n even → n/2. n odd → 3n + 1. No third case, no exception for size, and nothing about the two formulas suggests where the sequence should end."
+          title={<>The rule has <Accent>two steps.</Accent></>}
+          lede="If n is even, halve it. If n is odd, triple it and add one. Then repeat."
         >
           <RuleExplainer />
         </Section>
@@ -34,8 +34,8 @@ export default function App() {
         <SectionMarker label="Explorer" note="Positive or negative" />
         <Section
           id="explorer"
-          title={<>Compute a sequence <Accent>for yourself.</Accent></>}
-          lede="Total stopping time, peak value, and the count of each step type — for any nonzero seed up to one billion in magnitude."
+          title={<>Try a <Accent>starting number.</Accent></>}
+          lede="See its trajectory, total stopping time, highest value, and step counts. The explorer accepts nonzero integers up to one billion in magnitude."
         >
           <HailstoneExplorer />
         </Section>
@@ -43,8 +43,8 @@ export default function App() {
         <SectionMarker label="The coral" note="Interactive map" />
         <Section
           id="map"
-          title={<>Every number, <Accent>one structure.</Accent></>}
-          lede="Run the rule backwards from 1: predecessors of m are 2m, and (m − 1)/3 when that's a positive odd integer. Every reachable number branches off this graph. Rotating each branch by a fixed angle turns the plain directed graph into the shape below."
+          title={<>Trace the graph <Accent>backward.</Accent></>}
+          lede="Starting at 1, each number m has the predecessor 2m. It also has (m − 1)/3 when that value is a positive odd integer. Fixed branch angles turn this reverse graph into the shape below."
         >
           <CoralMap />
         </Section>
@@ -52,8 +52,8 @@ export default function App() {
         <SectionMarker label="Statistics" note="Computed live" />
         <Section
           id="statistics"
-          title={<>Downward drift, <Accent>on average.</Accent></>}
-          lede="A probabilistic model treats the powers of two removed after each odd step as independent. In that model their expected count is two, giving an approximate geometric-mean multiplier of 3/4 from one odd number to the next. The downward drift is persuasive, but it is not a proof."
+          title={<>What the sample <Accent>suggests.</Accent></>}
+          lede="A random-parity model predicts a geometric-mean multiplier of 3/4 from one odd value to the next. This matches the general downward trend, but does not establish convergence."
         >
           <div class="mt-10">
             <RecordsStats />
@@ -68,8 +68,8 @@ export default function App() {
         <SectionMarker label="Why it's hard" note="Still open" />
         <Section
           id="unsolved"
-          title={<>No proof exists <Accent>for all n.</Accent></>}
-          lede="Every integer checked so far — up to 2^71 — reaches 1. No proof rules out a counterexample beyond that bound. Here is exactly what such a counterexample would have to look like, and how far the partial results get."
+          title={<>What has been proved <Accent>so far.</Accent></>}
+          lede="Every integer checked up to 2^71 reaches 1. A counterexample beyond that limit has not been ruled out."
         >
           <OpenQuestions />
           <ProofProgress />
