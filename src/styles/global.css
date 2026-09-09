@@ -1,0 +1,279 @@
+@import "tailwindcss";
+
+/* ── Blueprint design system ─────────────────────────────────────────────────
+ * Warm technical-drawing palette: cream paper, teal ink, sand/sienna accents.
+ * Light is the default; dark is an override via [data-theme="dark"].
+ * ────────────────────────────────────────────────────────────────────────── */
+:root[data-theme="dark"] {
+  --native-color-scheme: dark;
+
+  --background:                  #0c0b0a;
+  --surface-container-lowest:    #0c0b0a;
+  --surface-container-low:       #131211;
+  --surface-container:           #1a1917;
+  --surface-container-high:      #23211e;
+  --surface-container-highest:   #2e2b27;
+
+  --primary:                     #2bb3a3;
+  --on-primary:                  #04211e;
+  --secondary:                   #e9c46a;
+  --tertiary:                    #fdf0d5;
+  --warning:                     #e9c46a;
+  --success:                     #2bb3a3;
+  --error:                       #e8825f;
+
+  --on-surface:                  #fdf0d5;
+  --on-surface-variant:          #b0a794;
+  --outline:                     #7e7768;
+  --outline-variant:             #2e2b27;
+
+  --hairline:                    #2a2723;
+  --hairline-strong:             #3d3933;
+  --ink:                         #08070a;
+  --on-ink:                      #fdf0d5;
+  --on-ink-muted:                #a79c86;
+  --on-ink-accent:               #e9c46a;
+}
+
+:root {
+  --native-color-scheme: light;
+
+  --background:                  #fffdf8;
+  --surface-container-lowest:    #ffffff;
+  --surface-container-low:       #fdf9ef;
+  --surface-container:           #fdf0d5;
+  --surface-container-high:      #f3e4c3;
+  --surface-container-highest:   #e8d6af;
+
+  --primary:                     #1c8072;
+  --on-primary:                  #ffffff;
+  --secondary:                   #8a6516;
+  --tertiary:                    #8a6e45;
+  --warning:                     #8a6516;
+  --success:                     #1c8072;
+  --error:                       #c4472b;
+
+  --on-surface:                  #1e1b16;
+  --on-surface-variant:          #5c5445;
+  --outline:                     #8a7f6b;
+  --outline-variant:             #e0d3b4;
+
+  --hairline:                    #ded2bb;
+  --hairline-strong:             #c4b696;
+
+  --ink:                         #17150f;
+  --on-ink:                      #fdf0d5;
+  --on-ink-muted:                #a79c86;
+  --on-ink-accent:               #e9c46a;
+}
+
+@theme inline {
+  --color-background:                var(--background);
+  --color-surface-container-lowest:  var(--surface-container-lowest);
+  --color-surface-container-low:     var(--surface-container-low);
+  --color-surface-container:         var(--surface-container);
+  --color-surface-container-high:    var(--surface-container-high);
+  --color-surface-container-highest: var(--surface-container-highest);
+  --color-primary:                   var(--primary);
+  --color-on-primary:                var(--on-primary);
+  --color-secondary:                 var(--secondary);
+  --color-tertiary:                  var(--tertiary);
+  --color-warning:                   var(--warning);
+  --color-success:                   var(--success);
+  --color-error:                     var(--error);
+  --color-on-surface:                var(--on-surface);
+  --color-on-surface-variant:        var(--on-surface-variant);
+  --color-outline:                   var(--outline);
+  --color-outline-variant:           var(--outline-variant);
+  --color-hairline:                  var(--hairline);
+  --color-hairline-strong:           var(--hairline-strong);
+  --color-ink:                       var(--ink);
+  --color-on-ink:                    var(--on-ink);
+  --color-on-ink-muted:              var(--on-ink-muted);
+  --color-on-ink-accent:             var(--on-ink-accent);
+}
+
+@layer base {
+  * { box-sizing: border-box; }
+
+  html {
+    color-scheme: var(--native-color-scheme);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background: var(--background);
+    color: var(--on-surface);
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a { text-decoration: none; color: inherit; }
+
+  ::selection { background: var(--primary); color: var(--on-primary); }
+}
+
+@layer components {
+  .font-display {
+    font-family: "Space Mono", ui-monospace, SFMono-Regular, monospace;
+    font-feature-settings: "liga" 0;
+  }
+  .font-serif {
+    font-family: "Instrument Serif", Georgia, "Times New Roman", serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .font-headline { font-family: "Space Grotesk", sans-serif; }
+  .font-mono {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+    font-feature-settings: "liga" 0;
+  }
+  .tnum { font-variant-numeric: tabular-nums; }
+
+  .label {
+    font-family: "Space Mono", ui-monospace, monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .ruled { position: relative; }
+  .ruled::before,
+  .ruled::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--hairline);
+    pointer-events: none;
+  }
+  .ruled::before { left: 0; }
+  .ruled::after { right: 0; }
+
+  .grid-paper {
+    background-image:
+      linear-gradient(to right, var(--hairline) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--hairline) 1px, transparent 1px);
+    background-size: 22px 22px;
+    background-position: -1px -1px;
+  }
+  .grid-paper-fade {
+    -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 45%, #000 40%, transparent 100%);
+    mask-image: radial-gradient(ellipse 70% 70% at 50% 45%, #000 40%, transparent 100%);
+  }
+
+  /* Corner ticks — small L-shaped marks pinned to a panel's corners, the way a
+   * technical drawing marks a crop or registration point. */
+  .corner-ticks { position: relative; }
+  .corner-ticks::before,
+  .corner-ticks::after {
+    content: "";
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    pointer-events: none;
+    border-color: var(--hairline-strong);
+  }
+  .corner-ticks::before {
+    top: -1px; left: -1px;
+    border-top: 1.5px solid var(--hairline-strong);
+    border-left: 1.5px solid var(--hairline-strong);
+  }
+  .corner-ticks::after {
+    bottom: -1px; right: -1px;
+    border-bottom: 1.5px solid var(--hairline-strong);
+    border-right: 1.5px solid var(--hairline-strong);
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 0;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-rise { animation: rise 0.6s cubic-bezier(0.25, 1, 0.5, 1) both; }
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes dash-flow {
+  to { stroke-dashoffset: -200; }
+}
+.animate-flow { animation: dash-flow 8s linear infinite; }
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.4); }
+}
+.animate-pulse-dot { animation: pulse-dot 1.8s ease-in-out infinite; }
+
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Reveal-on-scroll: JS toggles [data-in] once an element crosses the viewport. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s cubic-bezier(0.25, 1, 0.5, 1), transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+}
+[data-reveal][data-in] {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
+}
+
+/* Range input, restyled to match the blueprint instrument-panel look. */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 2px;
+  background: var(--hairline-strong);
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 13px;
+  height: 13px;
+  background: var(--primary);
+  border: 2px solid var(--surface-container-lowest);
+  box-shadow: 0 0 0 1px var(--primary);
+  cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 11px;
+  height: 11px;
+  background: var(--primary);
+  border: 2px solid var(--surface-container-lowest);
+  box-shadow: 0 0 0 1px var(--primary);
+  cursor: pointer;
+  border-radius: 0;
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--surface-container-low); }
+::-webkit-scrollbar-thumb { background: var(--hairline-strong); border: 2px solid var(--surface-container-low); }
